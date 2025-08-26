@@ -106,4 +106,22 @@ app.get('/getstudentbyquery',async(req,res)=>{
     }
 })
 
+app.put('/updatestudent',async(req,res)=>{
+    const {rollno,name,age,department} = req.body
+    try{
+        const updatestudent = await student.findOneAndUpdate(
+            {rollno},
+            {name,age,department},
+            {new:true}
+        )
+        if(updatestudent){
+            res.send("Student updated")
+        }else{
+            res.status(404).send("Student not found")
+        }
+    }catch(error){
+        res.status(500).send("Error updating students")
+    }
+})
+
 app.listen(3000)
